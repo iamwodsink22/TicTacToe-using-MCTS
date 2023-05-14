@@ -79,7 +79,7 @@ class MCTS:
             # The value of the new state from the perspective of the other player
             value = Env(next_state, player=1).get_reward(player=1)
             print(value)
-            print("Lado")
+            
             if value == 0:
                 # If the game has not ended:
                 # EXPAND
