@@ -7,7 +7,7 @@ turn = 1
 print(z)
 # Until the game is not over, keep taking turns between CPU and Player
 while Env(z, -1).game_end() is False:
-    print("Fuck")
+    
     if turn == -1:
         '''Rows are a and columns are b i.e 1'space'2 means first row second column'''
         a, b = input("Enter Your move").split()
