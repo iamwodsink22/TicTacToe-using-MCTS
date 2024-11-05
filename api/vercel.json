@@ -1,7 +1,4 @@
 {
-    "builds": [
-    {"src": "/api.py"}
-             ],
     "routes": [
       { "src": "/(.*)", "dest": "/api.py" }
     ]
