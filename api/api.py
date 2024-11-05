@@ -7,7 +7,7 @@ from env import Env
 app=FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://tic-tac-toe-using-mcts.vercel.app/"],  # Allow only this origin
+    allow_origins=["https://tic-tac-toe-using-mcts-1jhb.vercel.app"],  # Allow only this origin
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (POST, GET, etc.)
     allow_headers=["*"],  # Allow all headers
