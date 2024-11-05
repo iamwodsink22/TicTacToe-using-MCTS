@@ -53,7 +53,7 @@ class MCTS:
         root = Node(1)
 
         root.expand(self.cop_game, player)
-        for i in range(100):
+        for i in range(1000):
         
             node = root
             while not node.is_terminal():
