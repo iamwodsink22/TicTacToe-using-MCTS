@@ -1,9 +1,4 @@
 {
-    "functions": {
-      "backend/api.py": {
-        
-      }
-    },
     "routes": [
       { "src": "/api/(.*)", "dest": "/backend/api.py" }
     ]
