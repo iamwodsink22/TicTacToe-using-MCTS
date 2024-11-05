@@ -67,7 +67,7 @@ async function getAIMove(board, aiSymbol) {
   console.log(board)
 
   try {
-    const response = await fetch('https://tic-tac-toe-using-mcts-1k9k.vercel.app/move', {
+    const response = await fetch('https://tic-tac-toe-using-mcts-1k9k.vercel.app/api/move', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json' 
