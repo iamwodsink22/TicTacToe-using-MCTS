@@ -21,6 +21,9 @@ function makeMove(index) {
     resetGame();
     return;
   }
+  if(board.includes(0)==false){
+    resetGame()
+ }
 
   aiMove(); 
 }
@@ -28,7 +31,6 @@ function makeMove(index) {
 async function aiMove() {
   
   const aiMoveIndex = await getAIMove(board, aiSymbol)
-  console.log(aiMoveIndex)
 
   
   if (aiMoveIndex !== -1) {
@@ -40,6 +42,7 @@ async function aiMove() {
       alert("AI wins!");
       resetGame();
     }
+
   }
 }
 
@@ -49,9 +52,11 @@ function checkWin(symbol) {
     [0, 3, 6], [1, 4, 7], [2, 5, 8], 
     [0, 4, 8], [2, 4, 6]             
   ];
+
   return winPatterns.some(pattern => 
     pattern.every(index => board[index] === symbol)
   );
+  
 }
 
 function resetGame() {
@@ -64,10 +69,9 @@ function resetGame() {
 }
 
 async function getAIMove(board, aiSymbol) {
-  console.log(board)
 
   try {
-    const response = await fetch('https://tic-tac-toe-using-mcts-1k9k.vercel.app/move', {
+    const response = await fetch('https://tic-tac-toe-using-mcts-1jhb.vercel.app/move', {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json' 
@@ -84,7 +88,6 @@ async function getAIMove(board, aiSymbol) {
     }
 
     const data = await response.json();
-    console.log(data) 
     return data.action;
 
   } catch (error) {

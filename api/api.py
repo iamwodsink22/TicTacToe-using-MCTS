@@ -19,7 +19,7 @@ class BoardModel(BaseModel):
 @app.post('/move')
 def get_move(board:BoardModel):
     states=board.state
-    print(states)
+    
     for i in range(len(states)):
         if states[i]==0:
             states[i]=0
@@ -28,11 +28,8 @@ def get_move(board:BoardModel):
         else:
             states[i]=1
     z=np.array(states).reshape(3, 3)
-    print(z.T)
     env = Env(z.T, 1)
     action = MCTS(env).simulate(1)
-    print(action)
     index=action[1]*3+action[0]
-    print(index)
     return {'action':int(index)}
     

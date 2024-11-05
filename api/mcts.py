@@ -15,6 +15,11 @@ class Node:
         self.w = 0
         self.n = 0
         self.state = None
+        
+        
+    def is_terminal(self,):
+        
+        return self.state.game_end()
 
     def eval(self, training: bool):
 
@@ -24,7 +29,7 @@ class Node:
         return max(self.children, key=lambda action: self.children[action].eval(training))
 
     def choose_random_action(self) -> int:
-        return random.sample(self.children.keys(), 1)[0]
+        return random.sample(list(self.children.keys()), 1)[0]
 
     def expand(self, state, player):
         self.state = state
@@ -32,7 +37,6 @@ class Node:
             if action not in self.children:
                 self.children[action] = Node(
                     player*-1, prevNode=self, action=action)
-    # check if the given node is expanded
 
     def expanded(self):
         return len(self.children) > 0
@@ -43,46 +47,42 @@ class MCTS:
         self.game = state
         self.cop_game = copy.deepcopy(state)
         self.training = training
-    # simulate the root node
+    
 
     def simulate(self, player):
         root = Node(1)
 
-        # EXPAND root
-
         root.expand(self.cop_game, player)
-
-        for _ in range(6):
-            
+        for i in range(100):
+        
             node = root
-            search_path = [node]
+            while not node.is_terminal():
+                    
+                    search_path = [node]
 
-            # SELECT
-            if node.expanded():
-                action = node.choose_best_action(True)
-                search_path.append(node.children[action])
+                    # SELECT
+                    if node.expanded():
+                        
+                        action = node.choose_random_action()
+                        node=node.children[action]
+                        
+                        search_path.append(node)
+                    parent = search_path[-2]
+                    state = parent.state
+                    next_state, _ = state.next_state(
+                        action=action, player=state.player)
+                   
+                    # next_state = state.get_cboard(next_state, player=-1)
+                    node.state=Env(next_state, player=_)
+                    value = Env(next_state, player=_).get_reward(_)
+                    
+                    
+                    if value == 0:
+                        node.expand(Env(next_state, _), _)
 
-            parent = search_path[-2]
-            state = parent.state
-            
-           
-            next_state, _ = state.next_state(
-                action=action, player=state.player)
-            print(next_state)
-            # next_state = state.get_cboard(next_state, player=-1)
-            value = Env(next_state, player=_).get_reward(_)
-            
-            
-            if value == 0:
-                # If the game has not ended:
-                # EXPAND
-
-                node.expand(Env(next_state, _), _)
-
-            self.backpropagation(search_path, value,1)
+                    self.backpropagation(search_path, value,1)
 
         return root.choose_best_action(False)
-    # value of each node is stored in search path
 
     def backpropagation(self, search_path, value, to_play):
         for node in reversed(search_path):
