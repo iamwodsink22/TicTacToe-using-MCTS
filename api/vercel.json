@@ -1,0 +1,10 @@
+{
+    "functions": {
+      "backend/api.py": {
+        "runtime": "vercel-python"
+      }
+    },
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/backend/api.py" }
+    ]
+  }
